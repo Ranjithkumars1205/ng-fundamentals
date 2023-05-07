@@ -1,7 +1,7 @@
 import { Route } from "@angular/router";
 import { Error404Component } from "./errors/404.component";
 import { CreateEventComponent, EventRouteActivator, EventsListResolver,
-  EventDetailsComponent, EventsListComponent } from './events/index';
+  EventDetailsComponent, EventsListComponent, CreateSessionComponent } from './events/index';
 
 export const appRoutes: Route[] = [
   // canDeactivate - If i click on anything that would take me away from this page, it prevent me from doing that.
@@ -10,6 +10,7 @@ export const appRoutes: Route[] = [
   //  when angular see this events/new, it will hit that first and will send us to this route.
   { path: 'events', component: EventsListComponent, resolve: { events: EventsListResolver } },
   { path: 'events/:id', component: EventDetailsComponent, canActivate: [EventRouteActivator] },
+  { path: 'events/session/new', component: CreateSessionComponent },
   { path: '404', component: Error404Component },
   // { path: '**', component: Error404Component},
   { path: '', redirectTo: '/events', pathMatch: 'full' },
@@ -18,6 +19,8 @@ export const appRoutes: Route[] = [
   /** In this function, we'll use a dynamic import to load this module. Dynamic imports return a promise that
    * contains the module to be imported, and we need to return the UserModule class from that import,so we'll add
    * .then here
+   *
+   * we dont need to import this in appModule if it is lazyloading module
    */
   { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)}
 

@@ -2,18 +2,26 @@
   <h1>Edit Your Profile </h1>
   <hr>
   <div class="col-md-4">
-    <form autocomplete="off" novalidate>
-      <div class="form-group">
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile(profileForm.value)" autocomplete="off" novalidate
+    >
+      <div class="form-group" [ngClass]="{'error': !validateFirstName() }">
         <label for="firstName">First Name:</label>
-        <input id="firstName" type="text" class="form-control" placeholder="First Name..." />
+        <!-- . Note that from Angular v13, it changed a bit from an old code like this:
+        <em *ngIf="!validateFirstName() && myForm['firstName'].errors?.required">Required</em>
+        <em *ngIf="!validateFirstName() && myForm['firstName'].errors?.['required']">Required</em>
+        -->
+        <em *ngIf="!validateFirstName() && myForm['firstName'].errors?.['required']">Required</em>
+        <em *ngIf="!validateFirstName() && myForm['firstName'].errors?.['pattern']">Must start with a letter</em>
+        <input id="firstName" formControlName="firstName" type="text" class="form-control" placeholder="First Name..." />
       </div>
-      <div class="form-group">
+      <div class="form-group" [ngClass]="{'error': !validateLastName()}">
         <label for="lastName">Last Name:</label>
-        <input id="lastName" type="text" class="form-control" placeholder="Last Name..." />
+        <em *ngIf="!validateLastName()">Required</em>
+        <input id="lastName" formControlName="lastName" type="text" class="form-control" placeholder="Last Name..." />
       </div>
 
       <button type="submit" class="btn btn-primary">Save</button>
-      <button type="button" class="btn btn-default">Cancel</button>
+      <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
     </form>
   </div>
 </div>
