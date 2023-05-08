@@ -1,7 +1,7 @@
-import { FormControl } from "@angular/forms";
+import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
 
-export function restrictedWords(words: string[]) {
-  return (control: FormControl): {[key: string]: any} | null => {
+export function restrictedWords(words: string[]): ValidatorFn   {
+  return (control: AbstractControl): ValidationErrors | null => {
     if (!words) return null;
 
     let invalidWords = words

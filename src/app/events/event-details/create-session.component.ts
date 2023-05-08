@@ -1,10 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { Validators } from "@angular/forms";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { ValidatorFn, Validators } from "@angular/forms";
 import { FormControl, FormGroup } from "@angular/forms";
 import { ISession, restrictedWords } from "../shared/index";
 
 
 @Component({
+  selector: 'create-session',
   templateUrl: './create-session.component.html',
   styles: [`
    em {float:right; color:#E05C65; padding-left:10px;}
@@ -23,12 +24,15 @@ export class CreateSessionComponent implements OnInit {
   duration!: FormControl;
   level!: FormControl;
   abstract!: FormControl;
+  @Output() saveNewSession = new EventEmitter();
+  @Output() cancelAddSession = new EventEmitter()
   ngOnInit(): void {
     this.name = new FormControl('', Validators.required);
     this.presenter = new FormControl('', Validators.required);
     this.duration = new FormControl('', Validators.required);
     this.level = new FormControl('', Validators.required);
-    this.abstract = new FormControl('', [Validators.required, Validators.maxLength(400), restrictedWords(['foo', 'bar'])]);
+    // https://stackoverflow.com/questions/75954846/error-ts2769-no-overload-matches-this-call-overload-1-of-5-value-string-f - as ValidatorFn, we should add below for this error.
+    this.abstract = new FormControl('', [Validators.required, Validators.maxLength(400), restrictedWords(['foo', 'bar']) as ValidatorFn ]);
     this.newSessionForm = new FormGroup({
       name: this.name,
       presenter: this.presenter,
@@ -51,6 +55,11 @@ export class CreateSessionComponent implements OnInit {
       voters: []
     }
     console.log(session);
+    this.saveNewSession.emit(session);
+  }
+
+  cancel() {
+    this.cancelAddSession.emit();
   }
 }
 

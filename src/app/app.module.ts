@@ -6,7 +6,8 @@ import { ToastrService } from './common/toastr.service'
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { EventsListComponent, EventService, EventDetailsComponent, EventsListResolver,
-  CreateEventComponent, EventRouteActivator, EventThumbnailComponent, CreateSessionComponent } from './events/index';
+  CreateEventComponent, EventRouteActivator, EventThumbnailComponent, CreateSessionComponent,
+  SessionListComponent  } from './events/index';
 import { AuthService } from './user/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -24,7 +25,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NavBarComponent,
     EventDetailsComponent,
     CreateEventComponent,
-    CreateSessionComponent
+    CreateSessionComponent,
+    SessionListComponent
   ],
   providers: [EventService, ToastrService, EventsListResolver, EventRouteActivator,
     { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState },
