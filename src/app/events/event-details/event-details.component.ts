@@ -10,6 +10,8 @@ import { ActivatedRoute } from "@angular/router";
 export class EventDetailsComponent implements OnInit {
   event: any;
   addMode!: boolean;
+  filterBy: string = 'all';
+  sortBy: string = 'name';
   constructor(private eventService: EventService, private route: ActivatedRoute) {}
   ngOnInit(): void {
     this.event = this.eventService.getEvent(+this.route.snapshot.params['id']);
