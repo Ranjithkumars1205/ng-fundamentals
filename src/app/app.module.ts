@@ -2,7 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { EventsAppComponent } from './events-app.component';
 import { NavBarComponent } from './nav/nav-bar.component'
-import { ToastrService } from './common/toastr.service'
+import { TOASTR_TOKEN, Toastr } from './common/toastr.service'
+// import { TOASTR_TOKEN as TOASTR_TOKEN2 } from './common/toastr2.service' // we dont have any name collision, if we use like this
+
 import { CollapsibleWellComponent } from './common/collapsible-well.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
@@ -12,6 +14,9 @@ import { EventsListComponent, EventService, EventDetailsComponent, EventsListRes
   DurationPipe } from './events/index';
 import { AuthService } from './user/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
+declare let toastr: Toastr;
 
 @NgModule({
   imports: [
@@ -32,7 +37,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CollapsibleWellComponent,
     DurationPipe
   ],
-  providers: [EventService, ToastrService, EventsListResolver, EventRouteActivator,
+  providers: [EventService,
+    { provide: TOASTR_TOKEN, useValue: toastr },
+    EventsListResolver,
+    EventRouteActivator, // this is shorthand
+    // { provide: EventRouteActivator, useClass: EventRouteActivator}, //  this is longhand provide - here key-provide, useClass
+    // this is longhand provide
     { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState },
     AuthService // we can import auth service here also instead of usermodule
   ],
