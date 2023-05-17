@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { EventsAppComponent } from './events-app.component';
 import { NavBarComponent } from './nav/nav-bar.component'
 import { ToastrService } from './common/toastr.service'
+import { CollapsibleWellComponent } from './common/collapsible-well.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { EventsListComponent, EventService, EventDetailsComponent, EventsListResolver,
@@ -26,7 +27,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     EventDetailsComponent,
     CreateEventComponent,
     CreateSessionComponent,
-    SessionListComponent
+    SessionListComponent,
+    CollapsibleWellComponent
   ],
   providers: [EventService, ToastrService, EventsListResolver, EventRouteActivator,
     { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState },
