@@ -6,11 +6,16 @@ import { ToastrService } from './common/toastr.service'
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { EventsListComponent, EventService, EventDetailsComponent, EventsListResolver,
-  CreateEventComponent, EventRouteActivator, EventThumbnailComponent } from './events/index';
+  CreateEventComponent, EventRouteActivator, EventThumbnailComponent, CreateSessionComponent,
+  SessionListComponent  } from './events/index';
+import { AuthService } from './user/auth.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(appRoutes)
   ],
   declarations: [
@@ -19,10 +24,13 @@ import { EventsListComponent, EventService, EventDetailsComponent, EventsListRes
     EventThumbnailComponent,
     NavBarComponent,
     EventDetailsComponent,
-    CreateEventComponent
+    CreateEventComponent,
+    CreateSessionComponent,
+    SessionListComponent
   ],
   providers: [EventService, ToastrService, EventsListResolver, EventRouteActivator,
-    { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState }
+    { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState },
+    AuthService // we can import auth service here also instead of usermodule
   ],
   bootstrap: [EventsAppComponent]
 })
