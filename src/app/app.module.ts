@@ -8,7 +8,8 @@ import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
 import { EventsListComponent, EventService, EventDetailsComponent, EventsListResolver,
   CreateEventComponent, EventRouteActivator, EventThumbnailComponent, CreateSessionComponent,
-  SessionListComponent  } from './events/index';
+  SessionListComponent,
+  DurationPipe } from './events/index';
 import { AuthService } from './user/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -28,7 +29,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CreateEventComponent,
     CreateSessionComponent,
     SessionListComponent,
-    CollapsibleWellComponent
+    CollapsibleWellComponent,
+    DurationPipe
   ],
   providers: [EventService, ToastrService, EventsListResolver, EventRouteActivator,
     { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState },
