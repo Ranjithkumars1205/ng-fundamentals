@@ -1,20 +1,30 @@
-import { Component, OnInit } from "@angular/core";
-import { EventService, ISession } from "../shared/index";
-import { ActivatedRoute } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { EventService, ISession } from '../shared/index';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   templateUrl: './event-details.component.html',
-  styleUrls: ['./event-details.component.css']
-
+  styleUrls: ['./event-details.component.css'],
 })
 export class EventDetailsComponent implements OnInit {
   event: any;
   addMode!: boolean;
   filterBy: string = 'all';
   sortBy: string = 'name';
-  constructor(private eventService: EventService, private route: ActivatedRoute) {}
+
+  constructor(
+    private eventService: EventService,
+    private route: ActivatedRoute
+  ) {}
+
   ngOnInit(): void {
-    this.event = this.eventService.getEvent(+this.route.snapshot.params['id']);
+    /**
+     * params.forEach - When we trying to route by routerLink, routing would not be happened if we not used params.ForEach instead of using snapshot
+     */
+    this.route.params.forEach((params: Params) => {
+      this.event = this.eventService.getEvent(+params['id']);
+      this.addMode = false;
+    });
   }
 
   addSession() {
@@ -22,7 +32,10 @@ export class EventDetailsComponent implements OnInit {
   }
 
   saveNewSession(newSession: ISession) {
-    const nextId = Math.max.apply(null, this.event.sessions.map((s: any) => s.id));
+    const nextId = Math.max.apply(
+      null,
+      this.event.sessions.map((s: any) => s.id)
+    );
     newSession.id = nextId + 1;
     this.event.sessions.push(newSession);
     this.eventService.updateEvent(this.event);
